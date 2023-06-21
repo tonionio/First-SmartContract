@@ -1,21 +1,23 @@
 # First-SmartContract
+## Contracts Overview
 
-SimpleStorage is a SmartContract written in Solidity version 0.8.19. It's deployed on the EVM and provides a basic example of data storage and retrieval in a blockchain context.
+### SimpleStorage.sol
 
-Here's a rundown of its main elements:
+This contract represents a simple storage contract that allows you to store and retrieve a single integer value. It includes a variable `myfavoriteNumber` to store the favorite number. The contract provides functions:
 
-myfavoriteNumber: A uint256 variable that serves as a storage for a favorite number. It's initialized to 0 if no value is provided.
+- `store(uint256 _favoriteNumber)`: Stores the `_favoriteNumber` parameter in the `myfavoriteNumber` variable.
+- `retrieve()`: Retrieves the stored favorite number.
+- `addPerson(string memory _name, uint256 _favoriteNumber)`: Adds a person to the `listOfPeople` dynamic array, storing their favorite number and name.
+- `nameToFavoriteNumber` mapping: Maps names to favorite numbers.
 
-store: A function that takes a uint256 argument _favoriteNumber and assigns its value to myfavoriteNumber. After this assignment, it calls the retrieve function.
+### AddFiveStorage.sol
 
-retrieve: A view function that returns the value of myfavoriteNumber.
+This contract extends the `SimpleStorage` contract and overrides the `store` function. The overridden function adds 5 to the `_newNumber` parameter before storing it in the `myfavoriteNumber` variable.
 
-Person: A struct that contains two fields: favoriteNumber (a uint256) and name (a string).
+### StorageFactory.sol
 
-listOfPeople: A dynamic public array that stores Person structs.
+This contract acts as a factory for creating and managing instances of the `SimpleStorage` contract. It includes an array `listOfSimpleStorageContracts` to store multiple instances of the `SimpleStorage` contract. The contract provides functions:
 
-nameToFavoriteNumber: A public mapping that links a string (name) to a uint256 (favorite number).
-
-addPerson: A function that takes two arguments: _name (a string) and _favoriteNumber (a uint256). It creates a new Person struct with these values and adds it to the listOfPeople array. It also updates the nameToFavoriteNumber mapping.
-
-This SmartContract demonstrates fundamental concepts of Solidity and blockchain programming including basic data types, functions, structs, arrays, and mappings, as well as the use of memory in function arguments. It serves as a solid foundation for understanding how to create more complex contracts.
+- `createSimpleStorageContract()`: Creates a new instance of the `SimpleStorage` contract using the `new` keyword and adds it to the `listOfSimpleStorageContracts` array.
+- `sfStore(uint256 _simpleStorageIndex, uint256 _newSimpleStorageNumber)`: Calls the `store` function of a specific `SimpleStorage` contract from the array.
+- `sfget(uint256 _simpleStorageIndex)`: Retrieves the stored value from a specific `SimpleStorage` contract.
